@@ -1,0 +1,19 @@
+% N = FACES2NORMALS(M)
+%
+% Coverts all triangular mesh faces to point-normal-vector (6 x 1) represention
+function N = faces2normals(M)
+    
+    m = size(M.E,2);
+    N = zeros(6,m);
+    Va          =  M.V(:,M.E(2,:)) - M.V(:,M.E(3,:));
+    Vb          = M.V(:,M.E(4,:)) - M.V(:,M.E(3,:));
+    N(4:6,:)    = 
+    for mdx = 1:m
+        va          =  M.V(:,M.E(2,mdx)) - M.V(:,M.E(3,mdx));
+        vb          =  M.V(:,M.E(4,mdx)) - M.V(:,M.E(3,mdx));
+        N(1:3,mdx)  = (M.V(:,M.E(2,mdx)) + M.V(:,M.E(3,mdx)) + M.V(:,M.E(4,mdx)))/( M.E(1,mdx) - 1 );
+        N(4:6,mdx)  = cross(vb,va);
+        N(4:6,mdx)  = N(4:6,mdx)/norm(N(4:6,mdx));
+    end
+
+end

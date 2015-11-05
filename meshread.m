@@ -8,22 +8,30 @@ function M = meshread(filename)
     M.E = [];
     
     if fid > 0
-        
-        % Parse away the file header
-        header = fgets(fid,3);
-        
-        % Check that the file is '.OFF'
-        if  strcmpi(header,'OFF')
-            line        = fscanf(fid,'%d');
-            n_verts     = line(1);
-            n_edges     = line(2);
-            M.V         = fscanf(fid,'%f',[3,n_verts]);
-            M.E     	= fscanf(fid,'%d',[4,n_edges]) + 1;
-        else
-            warning(['Incompatible file : ',filename]); 
+        try
+            if ~isempty( strfind( filename , '.off' ) )
+                M = parse_off(fid);
+            else
+                warning('Unrecognized file format. Mesh not readable.');
+            end
         end
         fclose(fid);
     else
        warning(['No file : ',filename]); 
+    end
+end
+function M = parse_off(fid)
+    % Parse away the file header
+    header = fgets(fid,3);
+
+    % Check that the file is '.OFF'
+    if  strcmpi(header,'OFF')
+        line        = fscanf(fid,'%d');
+        n_verts     = line(1);
+        n_edges     = line(2);
+        M.V         = fscanf(fid,'%f',[3,n_verts]);
+        M.E     	= fscanf(fid,'%d',[4,n_edges]) + 1;
+    else
+        warning(['Incompatible file : ',filename]); 
     end
 end
