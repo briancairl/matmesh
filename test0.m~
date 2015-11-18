@@ -1,31 +1,36 @@
+%% Computations
 clear;
 clc;
+colormap('Cool')
 
-colormap('Winter')
 
 M   = meshread('wolf0.off');
-G   = mesh2graph(M,2);
 D   = pairwiselp(M.V,M.V,2);
 
 
 disp('Computing Geodesic distances');
-G   = geod(M,'-V');
+G   = geod(M);
 
+%%
 
 disp('Computing K-Centers Segments');
-IDS = kcenters(G,7,'SEED',20);
-IDC = scale2color(IDS);
-
-
+ID1     = kcenters(G,7,'SEED',20);
+ID1C    = scale2color(ID1);
+ID2     = kmeans(M.V,G,9);
+ID2C    = scale2color(ID2);
 
 %% K-Centers Segmentation Demo
 
 
-shg 
+figure(1)
 cla
-meshview(M,'FacevertexCData',IDC,'FaceColor','interp','EdgeColor','none','FaceAlpha',0.8);
+meshview(M,'FacevertexCData',ID1C,'FaceColor','interp','EdgeColor','none','FaceAlpha',0.95);
 cleanfig(gcf)
-pause(1e-6) 
+
+figure(2)
+cla
+meshview(M,'FacevertexCData',ID2C,'FaceColor','interp','EdgeColor','none','FaceAlpha',0.95);
+cleanfig(gcf)
 
 
 

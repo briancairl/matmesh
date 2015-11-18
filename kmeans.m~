@@ -1,0 +1,49 @@
+% KMEAN(D, k)
+%   
+%
+%
+function [ids,centers] = kmeans( D, V, k, varargin )
+    
+    % Init/seed
+    [N,idx]     = procInit(k,varargin);
+    ids         = zeros(1,N);
+    
+    % Init Centers
+    centers     = V(:,idx);
+    centers_s   = centers;
+    centers_n   = ones(1,k);
+    assoc       = idx;
+    
+    
+    % Init ids
+    while any(~boolean(ids))
+        knnsearch(
+        for kdx = 1:k
+            
+        end
+        
+    end
+    
+end
+function [ N, idx ] = procInit(k,argv)
+    
+    N   = size(D,2);
+    idx = unique_randi([1,k],1,1);
+
+    % Variable arguments
+    while numel(argv)
+        if strcmpi(argv{1},'SEED')
+           idx = argv{2}(1,1); 
+        end
+        argv(1:2) = [];
+    end
+end
+function idx = unique_randi(r,i,j)
+    idx = zeros(i,j);
+    for kdx = 1:(i*j)
+        r = randi(r,1,1);
+        while any(r==idx)
+            idx(kdx) = r;
+        end
+    end
+end

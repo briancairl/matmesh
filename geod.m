@@ -6,8 +6,8 @@ function [D,G] = geod(M,varargin)
     S = sparse(G);
     D = zeros(size(G));
     
-    parfor idx = 1:size(G,2)
-        
+    %parfor idx = 1:size(G,2)
+    for idx = 1:size(G,2)    
        D(idx,:) = graphshortestpath(S,idx);
        
        if v
