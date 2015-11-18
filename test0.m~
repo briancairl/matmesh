@@ -1,8 +1,7 @@
-%% Computations
 clear;
 clc;
-colormap('Cool')
 
+colormap('Winter')
 
 M   = meshread('wolf0.off');
 G   = mesh2graph(M,2);
@@ -10,7 +9,7 @@ D   = pairwiselp(M.V,M.V,2);
 
 
 disp('Computing Geodesic distances');
-G   = geod(M);
+G   = geod(M,'-V');
 
 
 disp('Computing K-Centers Segments');

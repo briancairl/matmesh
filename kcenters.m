@@ -6,22 +6,24 @@
 function ids = kcenters( D, k, varargin )
     
     % Init seed
-    [N,dist] = procInit(D,varargin);
+    [N,idx,dist]= procInit(D,varargin);
     
     % Init ids
-    ids     = ones(1,k);
-    avail   = ones(1,N);
+    ids         = ones(1,N);
+    avail       = ones(1,N);
+    avail(idx)  = 0;
     
     % Assign the remainder of the IDs
     for kdx = 2:k
-        [dl,idx]    = max(dist.*avail,[],2);
-        leq         = D(idx,:) < dl;
+        [dl,idx]    = max(dist.*avail);
+        leq         = ( D(idx,:) <= dist ) & ( boolean(avail) );
         dist(leq)   = D(idx,leq);
         ids(leq)    = kdx;
+        avail(idx)  = 0;
     end
     
 end
-function [ N, dist ] = procInit(D,argv)
+function [ N, idx, dist ] = procInit(D,argv)
     
     N   = size(D,2);
     idx = randi([1,N],1,1);

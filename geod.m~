@@ -1,0 +1,16 @@
+function [D,G] = geod(M,varargin)
+    
+    v = procInit(argv);
+    
+    G = mesh2graph(M,2);
+    S = sparse(G);
+    D = zeros(size(G));
+    
+    for idx = 1:size(G,2)
+       D(idx,:) = graphshortestpath(S,idx);
+    end
+    
+end
+function [v] = procInit(argv)
+    while numel(
+end
