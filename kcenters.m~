@@ -1,0 +1,24 @@
+% KCENTERS(D, k)
+%   
+% Source : http://sites.stat.psu.edu/~jiali/course/stat597e/notes2/kcenter.pdf 
+%
+%
+function ids = kcenters( D, k, varargin )
+
+    [N,idx,ids] = procInit(D,k,varargin);
+    
+    
+    
+
+end
+function [N,idx,ids] = procInit(D,k,varargin)
+    N   = size(D,2);
+    idx = randi([1,N],1,1);
+    ids = ones(1,k);
+    while numel(varargin)
+        if strcmpi(varargin{1},'SEED')
+           idx = varargin{2}(1,1); 
+        end
+    end
+end
+    
